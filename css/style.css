@@ -184,3 +184,11 @@ button:focus-visible {
 .leaflet-overlay-pane text.point {
   font-size: 10px;
 }
+
+.leaflet-overlay-pane path.shadow.hover:not(.selected) {
+  stroke-opacity: 0.4;
+}
+
+.leaflet-overlay-pane g.point.hover:not(.selected) .shadow {
+  stroke-opacity: 0.5;
+}

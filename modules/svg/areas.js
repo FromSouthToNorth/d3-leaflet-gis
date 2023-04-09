@@ -40,7 +40,9 @@ export function svgAreas(projection, context) {
         layers[layer].g.selectAll('path')
           .data(vanAreas.features)
           .join('path')
-          .attr('class', 'area ' + layer)
+          .attr('class', function(entity) {
+            return 'area ' + layer + ' ' + entity.properties.MAPID;
+          })
           .attr('clip-path', function(entity) {
             return layer === 'fill' ? 'url(#ideditor-' + entity.properties.MAPID + '-clippath)' : null;
           });

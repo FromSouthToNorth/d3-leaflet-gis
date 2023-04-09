@@ -10,6 +10,13 @@ export function coreContext() {
   const dispatch = d3_dispatch('enter', 'exit', 'change');
   let context = utilRebind({}, dispatch, 'on');
 
+  context.install =
+    (behavior) => context.overlayPane()
+      .call(behavior);
+  context.uninstall =
+    (behavior) => context.overlayPane()
+      .call(behavior.off);
+
   /* Container */
   let _container = d3_select(null);
   context.container = function(val) {
@@ -28,6 +35,11 @@ export function coreContext() {
   /* Map */
   let _map;
   context.map = () => _map;
+  context.overlayPane = () => _map.overlayPane();
+  context.overlayPaneRect =
+    () => _map.overlayPane()
+      .node()
+      .getBoundingClientRect();
 
   let _ui;
   context.ui = () => _ui;

@@ -2,6 +2,7 @@ import { behaviorHash } from '../behavior/hash.js';
 import { svgAreas } from '../svg/areas.js';
 import { svgPoints } from '../svg/points.js';
 import { svgLabels } from '../svg/labels.js';
+import { behaviorHover } from '../behavior/index.js';
 
 export function uiInit(context) {
 
@@ -23,6 +24,12 @@ export function uiInit(context) {
 
     const drawLabels = svgLabels(map.projection(), context);
     drawLabels(context.overlayPaneSvg);
+
+    const _behaviors = [
+      behaviorHover(context),
+    ];
+
+    _behaviors.forEach(context.install);
 
     ui.hash = behaviorHash(context);
     ui.hash();

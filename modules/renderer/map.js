@@ -51,7 +51,7 @@ export function rendererMap(context) {
     L.svg({ clickable: true })
       .addTo(_map);
 
-    _map.on('moveend', function() {
+    _map.on('move', function() {
       dispatch.call('move', this, map);
     });
 
