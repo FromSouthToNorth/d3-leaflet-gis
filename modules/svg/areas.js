@@ -1,12 +1,19 @@
 import { geoPath as d3_geoPath } from 'd3-geo';
-import { select as d3_select } from 'd3-selection';
 
-import vanAreas from '../../data/VanAreas.json';
+import { svgTagPattern } from './tag_pattern.js';
+import { svgTagClasses } from './tag_classes.js';
 
 export function svgAreas(projection, context) {
 
+  function getPatternStyle(tags) {
+    const imageID = svgTagPattern(tags);
+    if (imageID) {
+      return 'url("#ideditor-' + imageID + '")';
+    }
+    return '';
+  }
+
   function drawAreas(selection, data) {
-    // const layers = { fill: {}, shadow: {}, stroke: {} };
     let clipPaths, clipPathsEnter, path;
 
     const layers = {
@@ -42,7 +49,8 @@ export function svgAreas(projection, context) {
       .append('g')
       .attr('class', function(d) {
         return 'areagroup area-' + d;
-      }).merge(group);
+      })
+      .merge(group);
 
     let paths = group
       .selectAll('path')
@@ -50,7 +58,8 @@ export function svgAreas(projection, context) {
         return layers[layer];
       });
 
-    paths.exit().remove();
+    paths.exit()
+      .remove();
 
 
     const onZoom = () => {
@@ -65,19 +74,10 @@ export function svgAreas(projection, context) {
           this.setAttribute('class', `area ${layer} ${entity.wid}`);
           if (layer === 'fill') {
             this.setAttribute('clip-path', `url(#ideditor-${entity.wid}-clippath)`);
+            this.style.fill = this.style.stroke = getPatternStyle(entity.properties);
           }
         })
-        .attr('class', function(d) {
-          const { properties } = d;
-          console.log(properties.landuse);
-          let clazz = this.getAttribute('class');
-          clazz += properties.building === 'yes' ? ' building' : ''
-          clazz += properties.landuse ? ' ' + properties.landuse : '';
-          clazz += properties.leisure ? ' ' + properties.leisure : '';
-          clazz += properties.natural ? ' ' + properties.natural : '';
-          return clazz;
-        })
-        .attr('d', path);
+        .attr('d', path).call(svgTagClasses())
     };
 
     onZoom();

@@ -7,9 +7,18 @@
     <meta name='apple-mobile-web-app-capable' content='yes'/>
     <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'/>
     <title>Vite App</title>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app" class="mode-select"></div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

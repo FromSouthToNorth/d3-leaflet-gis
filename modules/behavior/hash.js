@@ -1,5 +1,7 @@
 import _throttle from 'lodash-es/throttle.js';
 
+import { select as d3_select } from 'd3-selection';
+
 import { prefs } from '../core/preferences.js';
 import { utilObjectOmit, utilQsString, utilStringQs } from '../util/index.js';
 
@@ -48,14 +50,16 @@ export function behaviorHash(context) {
     _cachedHash = window.location.hash;
 
     const q = utilStringQs(_cachedHash);
-    const mapArgs = (q.map || '').split('/').map(Number);
+    const mapArgs = (q.map || '').split('/')
+      .map(Number);
     if (mapArgs.length < 3 || mapArgs.some(isNaN)) {
       updateHashIfNeeded();
     }
     else {
       if (_cachedHash === computedHash()) return;
 
-      context.map().centerZoom([Math.min(_latitudeLimit, Math.max(-_latitudeLimit, mapArgs[1])), mapArgs[2]], mapArgs[0]);
+      context.map()
+        .centerZoom([Math.min(_latitudeLimit, Math.max(-_latitudeLimit, mapArgs[1])), mapArgs[2]], mapArgs[0]);
     }
   }
 
@@ -63,14 +67,23 @@ export function behaviorHash(context) {
     context.map()
       .on('move.behaviorHash', _throttledUpdate);
 
+    context
+      .on('enter.behaviorHash', _throttledUpdate);
+
+    d3_select(window)
+      .on('hashchange.behaviorHash', hashchange);
+
     const q = utilStringQs(window.location.hash);
 
     if (q.map) {
       behavior.hadLocation = true;
     }
     else if (prefs('map-location')) {
-      const mapArgs = prefs('map-location').split('/').map(Number);
-      context.map().centerZoom([Math.min(_latitudeLimit, Math.max(-_latitudeLimit, mapArgs[1])), mapArgs[2]], mapArgs[0]);
+      const mapArgs = prefs('map-location')
+        .split('/')
+        .map(Number);
+      context.map()
+        .centerZoom([Math.min(_latitudeLimit, Math.max(-_latitudeLimit, mapArgs[1])), mapArgs[2]], mapArgs[0]);
 
       updateHashIfNeeded();
 

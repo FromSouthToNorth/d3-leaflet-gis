@@ -31,7 +31,6 @@ export function behaviorHover(context) {
 
     function eventTarget(d3_event) {
       const datum = d3_event.target && d3_event.target.__data__;
-      console.log(datum);
       if (typeof datum !== 'object') return null;
       return datum;
     }

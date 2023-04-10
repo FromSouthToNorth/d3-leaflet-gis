@@ -4,15 +4,25 @@ import { svgPoints } from '../svg/points.js';
 import { svgLabels } from '../svg/labels.js';
 import { behaviorHover } from '../behavior/index.js';
 import cd from '../../data/cd.json';
+import { svgDefs } from './defs.js';
 
 export function uiInit(context) {
 
   function render(container) {
 
+    container.append('svg')
+      .attr('id', 'hy-defs')
+      .call(ui.svgDefs);
+
     const map = context.map();
     const content = container.append('div')
       .attr('class', 'main-content active');
-    content.call(map);
+
+    content
+      .append('div')
+      .attr('class', 'main-map')
+      .attr('dir', 'ltr')
+      .call(map);
 
     context.overlayPaneSvg =
       map.overlayPane();
@@ -72,6 +82,8 @@ export function uiInit(context) {
       })
       .catch(err => console.error(err));
   };
+
+  ui.svgDefs = svgDefs(context);
 
   return ui;
 }
