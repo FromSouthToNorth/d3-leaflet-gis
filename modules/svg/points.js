@@ -15,14 +15,14 @@ export function svgPoints(projection, context) {
     return b.loc[1] - a.lat[1];
   }
 
-  function drawPoints(selection) {
+  function drawPoints(selection, data) {
 
     selection.append('g')
       .attr('class', 'points');
 
     const drawLayer = selection.selectAll('.points');
     let groups = drawLayer.selectAll('g.point')
-      .data(Wcities.features);
+      .data(data);
 
     groups.exit()
       .remove();
@@ -30,7 +30,7 @@ export function svgPoints(projection, context) {
     const enter = groups.enter()
       .append('g')
       .attr('class', function(d) {
-        return 'node point ' + d.properties.Name;
+        return 'node point ' + d.wid;
       });
     enter.append('path')
       .call(markerPath, 'shadow');

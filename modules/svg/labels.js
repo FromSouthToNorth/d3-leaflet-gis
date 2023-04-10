@@ -16,7 +16,7 @@ export function svgLabels(projection, context) {
     texts.enter()
       .append('text')
       .attr('class', function(d) {
-        return classes + ' ' + 'point'  + ' ' + d.properties.Name;
+        return classes + ' ' + 'point'  + ' ' + d.wid;
       })
       .merge(texts)
       .style('text-anchor', 'start')
@@ -27,7 +27,7 @@ export function svgLabels(projection, context) {
         return get(d.geometry.coordinates, 'y') - 12;
       })
       .text(function(d) {
-        return d.properties.Name;
+        return d.properties.name;
       });
   }
 
@@ -36,7 +36,7 @@ export function svgLabels(projection, context) {
     return map.latLngToLayerPoint(_latLng)[prop];
   }
 
-  function drawLabels(selection) {
+  function drawLabels(selection, data) {
     const layer = selection.append('g')
       .attr('class', 'labels');
 
@@ -53,8 +53,8 @@ export function svgLabels(projection, context) {
 
     const onZoom = () => {
       // points
-      drawPointLabels(label, Wcities.features, 'pointlabel');
-      drawPointLabels(halo, Wcities.features, 'pointlabel-halo');
+      drawPointLabels(label, data, 'pointlabel');
+      drawPointLabels(halo, data, 'pointlabel-halo');
     };
     onZoom();
     context.map()

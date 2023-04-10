@@ -5,6 +5,7 @@ import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { geoTransform as d3_geoTransform } from 'd3-geo';
 
 import { utilRebind } from '../util/index.js';
+import { svgAreas, svgLabels, svgPoints } from '../svg/index.js';
 
 const zoom = 2;
 const minZoom = 2;

@@ -31,6 +31,7 @@ export function behaviorHover(context) {
 
     function eventTarget(d3_event) {
       const datum = d3_event.target && d3_event.target.__data__;
+      console.log(datum);
       if (typeof datum !== 'object') return null;
       return datum;
     }
@@ -56,13 +57,8 @@ export function behaviorHover(context) {
       _selection.selectAll('.hover')
         .classed('hover', false);
       let selector = '';
-      for (let { properties } of targets) {
-        if (properties.MAPID) {
-          selector += ', .' + properties.MAPID;
-        }
-        if (properties.Name) {
-          selector += ', .' + properties.Name;
-        }
+      for (let target of targets) {
+        selector += ', .' + target.wid;
       }
       if (selector.trim().length) {
         selector = selector.slice(1);
