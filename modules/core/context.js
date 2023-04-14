@@ -46,12 +46,10 @@ export function coreContext() {
 
   context.asset = (val) => {
     if (/^http(s)?:\/\//i.test(val)) return val;
-    return`../../img/${val}`;
-  }
+    return `../../img/${val}`;
+  };
 
   context.imagePath = (val) => context.asset(val);
-
-  context.projection = null;
 
   context.init = () => {
 

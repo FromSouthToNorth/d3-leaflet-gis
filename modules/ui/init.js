@@ -4,7 +4,10 @@ import { svgPoints } from '../svg/points.js';
 import { svgLabels } from '../svg/labels.js';
 import { behaviorHover } from '../behavior/index.js';
 import cd from '../../data/cd.json';
-import { svgDefs } from './defs.js';
+import { svgDefs } from '../svg/defs.js';
+import { uiEditMenu } from './edit_menu.js';
+import { behaviorSelect } from '../behavior/select.js';
+import { operationCopy, operationDelete, operationMove } from '../operations/index.js';
 
 export function uiInit(context) {
 
@@ -58,6 +61,7 @@ export function uiInit(context) {
 
     const _behaviors = [
       behaviorHover(context),
+      behaviorSelect(context),
     ];
 
     _behaviors.forEach(context.install);
@@ -84,6 +88,35 @@ export function uiInit(context) {
   };
 
   ui.svgDefs = svgDefs(context);
+
+  const _editMenu = uiEditMenu(context);
+  ui.editMenu = function() {
+    return _editMenu;
+  };
+  ui.showEditMenu = function(anchorPoint, triggerType, operations) {
+    ui.closeEditMenu();
+    if (!operations) operations = [
+      operationMove(context),
+      operationCopy(context),
+      operationDelete(context),
+    ];
+    operations.forEach(function(operation) {
+      if (operation.point) operation.point(anchorPoint);
+    });
+
+    _editMenu.anchorLoc(anchorPoint)
+      .operations(operations);
+
+    context.map()
+      .overlayPane()
+      .call(_editMenu);
+  };
+  ui.closeEditMenu = function() {
+    context.map()
+      .overlayPane()
+      .select('.edit-menu')
+      .remove();
+  };
 
   return ui;
 }

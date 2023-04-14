@@ -61,8 +61,14 @@ export function rendererMap(context) {
     });
   }
 
+  map.mainMap = function() {
+    return d3_select('.main-map');
+  };
+
   map.overlayPane = function() {
-    return d3_select(_map.getPanes()['overlayPane']).select('svg').attr('pointer-events', 'auto');
+    return d3_select(_map.getPanes()['overlayPane'])
+      .select('svg')
+      .attr('pointer-events', 'auto');
   };
 
   const projectPoint = function(x, y) {
@@ -71,6 +77,18 @@ export function rendererMap(context) {
   };
 
   map.projection = () => d3_geoTransform({ point: projectPoint });
+
+  map.point = (point) => {
+    const latLng = L.latLng(point[1], point[0]), { x, y } = map.getMap()
+      .latLngToLayerPoint(latLng);
+    return [x, y];
+  };
+
+  map.invert = (point) => {
+    const { lat, lng } = map.getMap()
+      .layerPointToLatLng(L.point(point[1], point[0]));
+    return [lng, lat];
+  };
 
   map.getMap = function() {
     return _map;

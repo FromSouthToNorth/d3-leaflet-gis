@@ -29,3 +29,30 @@ export function utilQsString(obj, noencode) {
     })
     .join('&');
 }
+
+/**
+ * a d3.mouse-alike which
+ * 1. Only works on HTML elements, not SVG
+ * 2. Does not cause style recalculation
+ * @param container
+ */
+export function utilFastMouse(container) {
+  const rect = container.getBoundingClientRect();
+  const rectLeft = rect.left;
+  const rectTop = rect.top;
+  const clientLeft = +container.clientLeft;
+  const clientTop = +container.clientTop;
+  return function(e) {
+    return [
+      e.clientX - rectLeft - clientLeft,
+      e.clientY - rectTop - clientTop,
+    ];
+  };
+}
+
+export function utilFunctor(value) {
+  if (typeof value === 'function') return value;
+  return function() {
+    return value;
+  };
+}
