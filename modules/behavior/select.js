@@ -11,6 +11,18 @@ export function behaviorSelect(context) {
   let _longPressTimeout = null;
   let _lastInteractionType = null;
 
+  // use pointer events on supported platforms; fallback to mouse events
+  var _pointerPrefix = 'PointerEvent' in window ? 'pointer' : 'mouse';
+
+  function pointerdown(d3_event) {
+    console.log(d3_event);
+    const id = (d3_event.pointerId || 'mouse').toString();
+    cancelLongPress();
+    if (d3_event.buttons && d3_event.buttons !== 1) return;
+
+    context.ui().closeEditMenu();
+  }
+
   function contextmenu(d3_event) {
     d3_event.preventDefault();
     _showMenu = true;
@@ -96,6 +108,8 @@ export function behaviorSelect(context) {
   }
 
   function behavior(selection) {
+    resetProperties();
+
     d3_select(window)
       .on('contextmenu.select-window', function(d3_event) {
         const e = d3_event;
@@ -104,8 +118,20 @@ export function behaviorSelect(context) {
         }
       });
 
-    selection.on('contextmenu.select', contextmenu);
+    selection
+      .on(_pointerPrefix + 'down.select', pointerdown)
+      .on('contextmenu.select', contextmenu);
   }
+
+  behavior.off = function(selection) {
+
+    d3_select(window)
+      .on('contextmenu.select-window', null);
+
+    selection
+      .on(_pointerPrefix + 'down.select', null)
+      .on('contextmenu.select', null);
+  };
 
   return behavior;
 }
