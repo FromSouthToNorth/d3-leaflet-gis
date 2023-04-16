@@ -35,6 +35,11 @@ export function coreContext() {
   /* Map */
   let _map;
   context.map = () => _map;
+  context.mapContainer = () => _map.container();
+  context.mapContainerRect =
+    () => _map.container()
+      .node()
+      .getBoundingClientRect();
   context.overlayPane = () => _map.overlayPane();
   context.overlayPaneRect =
     () => _map.overlayPane()

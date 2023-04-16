@@ -4,6 +4,7 @@ import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { geoVecAdd } from '../geo/index.js';
 import { uiTooltip } from './tooltip.js';
 import { utilRebind } from '../util/index.js';
+import { svgIcon } from '../svg/index.js';
 
 export function uiEditMenu(context) {
 
@@ -34,7 +35,6 @@ export function uiEditMenu(context) {
   let _tooltips = [];
 
   const editMenu = function(selection) {
-    console.log('editMenu selection: ', selection);
     const ops = _operations.filter(function(op) {
       return !op.mouseOnly;
     });
@@ -46,6 +46,7 @@ export function uiEditMenu(context) {
     _menuWidth = 44;
 
     _menuHeight = _verticalPadding * 2 + ops.length * buttonHeight;
+
     _menu = selection.append('div')
       .attr('class', 'edit-menu')
       .style('padding', _verticalPadding + 'px 0');
@@ -60,12 +61,35 @@ export function uiEditMenu(context) {
         return 'edit-menu-item edit-menu-item-' + d.id;
       })
       .style('height', buttonHeight + 'px')
-      .on('click', click);
+      .on('click', click)
+      .on('pointerup', function(d) {
+        console.log('pointerup: ', d);
+      })
+      .on('pointerdown mousedown', function pointerdown(d3_event) {
+        console.log('pointerdown');
+        // don't let button presses also act as map input - #1869
+        d3_event.stopPropagation();
+      })
+      .on('mouseenter.highlight', function(d3_event, d) {
+        if (d3_select(this)
+          .classed('disabled')) return;
+        console.log('mouseenter');
+      })
+      .on('mouseleave.highlight', function(d3_event, d) {
+        console.log('mouseleave');
+      });
 
     buttonsEnter.merge(buttons)
       .classed('disabled', function(d) {
         return d.disabled();
       });
+
+    buttonsEnter.each(function(d) {
+      d3_select(this)
+        .append('div')
+        .attr('class', 'icon-wrap')
+        .call(svgIcon(d.icon && d.icon() || '#iD-operation-' + d.id, 'operation'));
+    });
 
     updatePosition();
 
@@ -81,9 +105,9 @@ export function uiEditMenu(context) {
 
     const anchorLoc = context.map()
       .point(_anchorLocLonLat);
-    console.log(anchorLoc);
 
-    const viewport = context.overlayPaneRect();
+    const viewport = context.mapContainerRect();
+
     if (anchorLoc[0] < 0 || anchorLoc[0] > viewport.weight || anchorLoc[1] < 0 || anchorLoc[1] > viewport.height) {
       // close the menu if it's gone offscreen
       editMenu.close();
@@ -91,41 +115,38 @@ export function uiEditMenu(context) {
     }
 
     const menuLeft = displayOnLeft(viewport);
-    const offset = [0, 0];
-    offset[0] = menuLeft ? -1 * (_menuSideMargin + _menuWidth) : _menuSideMargin;
 
+    const offset = [0, 0];
+
+    offset[0] = menuLeft ? -1 * (_menuSideMargin + _menuWidth) : _menuSideMargin;
     if (anchorLoc[1] + _menuHeight > (viewport.height - _vpBottomMargin)) {
+      // menu is near bottom viewport edge, shift upwards
       offset[1] = -anchorLoc[1] - _menuHeight + viewport.height - _vpBottomMargin;
     }
     else {
       offset[1] = 0;
     }
-
     const origin = geoVecAdd(anchorLoc, offset);
 
     _menu.style('left', origin[0] + 'px')
-      .style('top', origin[1] + 'px');
+      .style('top', origin[1] + 'px').style('z-index', 890)
 
     function displayOnLeft(viewport) {
-      return (anchorLoc[0] - _menuSideMargin - _menuWidth) < _vpSideMargin;
+      if ((anchorLoc[0] + _menuSideMargin + _menuWidth) > (viewport.width - _vpSideMargin)) {
+        // right menu would be too close to the right viewport edge, go left
+        return true;
+      }
+      // prefer right menu
+      return false;
     }
 
-    function tooltipPosition(viewport, menuLeft) {
-      if (!menuLeft) {
-        return 'right';
-      }
-      if ((anchorLoc[0] - _menuSideMargin - _menuWidth - _tooltipWidth) < _vpSideMargin) {
-        return 'right';
-      }
-
-      return 'left';
-    }
   }
 
   editMenu.close = function() {
     context.map()
       .on('move.edit-menu', null)
       .on('drawn.edit-menu', null);
+
     _menu.remove();
     _tooltips = [];
     dispatch.call('toggled', this, false);

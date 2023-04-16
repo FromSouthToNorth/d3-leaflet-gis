@@ -8,7 +8,7 @@ export function svgAreas(projection, context) {
   function getPatternStyle(tags) {
     const imageID = svgTagPattern(tags);
     if (imageID) {
-      return 'url("#ideditor-' + imageID + '")';
+      return 'url("#hy-' + imageID + '")';
     }
     return '';
   }
@@ -34,7 +34,7 @@ export function svgAreas(projection, context) {
       .append('clipPath')
       .attr('class', 'clipPath-osm')
       .attr('id', function(entity) {
-        return 'ideditor-' + entity.wid + '-clippath';
+        return 'hy-' + entity.wid + '-clippath';
       });
     clipPathsEnter.append('path');
 
@@ -73,7 +73,7 @@ export function svgAreas(projection, context) {
           const layer = this.parentNode.__data__;
           this.setAttribute('class', `area ${layer} ${entity.wid}`);
           if (layer === 'fill') {
-            this.setAttribute('clip-path', `url(#ideditor-${entity.wid}-clippath)`);
+            this.setAttribute('clip-path', `url(#hy-${entity.wid}-clippath)`);
             this.style.fill = this.style.stroke = getPatternStyle(entity.properties);
           }
         })

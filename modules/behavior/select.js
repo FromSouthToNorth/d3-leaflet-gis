@@ -75,7 +75,7 @@ export function behaviorSelect(context) {
     if (entity) {
       datum = entity;
     }
-    console.log(datum);
+
     context.ui()
       .closeEditMenu();
     if (_showMenu) context.ui()

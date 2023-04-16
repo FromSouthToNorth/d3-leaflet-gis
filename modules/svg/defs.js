@@ -1,8 +1,15 @@
 import { select as d3_select } from 'd3-selection';
+import {svg as d3_svg} from 'd3-fetch';
+
+import { utiArrayUniq } from '../util/index.js';
 
 export function svgDefs(context) {
 
   let _defsSelection = d3_select(null);
+
+  let _spritesheetIds = [
+    'iD-sprite', 'maki-sprite', 'temaki-sprite', 'fa-sprite', 'roentgen-sprite', 'community-sprite',
+  ];
 
   function drawDefs(selection) {
     _defsSelection = selection.append('defs');
@@ -44,7 +51,7 @@ export function svgDefs(context) {
       .enter()
       .append('pattern')
       .attr('id', function(d) {
-        return 'ideditor-pattern-' + d[0];
+        return 'hy-pattern-' + d[0];
       })
       .attr('width', 32)
       .attr('height', 32)
@@ -69,7 +76,51 @@ export function svgDefs(context) {
       .attr('xlink:href', function(d) {
         return context.imagePath('pattern/' + d[1] + '.png');
       });
+
+    addSprites(_spritesheetIds, true);
   }
+
+  function addSprites(ids, overrideColors) {
+    _spritesheetIds = utiArrayUniq(_spritesheetIds.concat(ids));
+
+    const spritesheets = _defsSelection
+      .selectAll('.spritesheet')
+      .data(_spritesheetIds);
+
+    spritesheets
+      .enter()
+      .append('g')
+      .attr('class', function(d) {
+        return 'spritesheet spritesheet-' + d;
+      })
+      .each(function(d) {
+        var url = context.imagePath(d + '.svg');
+        var node = d3_select(this)
+          .node();
+        d3_svg(url)
+          .then(function(svg) {
+            node.appendChild(
+              d3_select(svg.documentElement)
+                .attr('id', 'hy-' + d)
+                .node(),
+            );
+            if (overrideColors && d !== 'iD-sprite') {   // allow icon colors to be overridden..
+              d3_select(node)
+                .selectAll('path')
+                .attr('fill', 'currentColor');
+            }
+          })
+          .catch(function() {
+            /* ignore */
+          });
+      });
+
+    spritesheets
+      .exit()
+      .remove();
+  }
+
+  drawDefs.addSprites = addSprites;
 
   return drawDefs;
 

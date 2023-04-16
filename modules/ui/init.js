@@ -108,12 +108,12 @@ export function uiInit(context) {
       .operations(operations);
 
     context.map()
-      .overlayPane()
+      .supersurface
       .call(_editMenu);
   };
   ui.closeEditMenu = function() {
     context.map()
-      .overlayPane()
+      .supersurface
       .select('.edit-menu')
       .remove();
   };

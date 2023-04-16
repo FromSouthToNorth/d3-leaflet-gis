@@ -33,6 +33,7 @@ export function rendererMap(context) {
 
   const dispatch = d3_dispatch('move', 'drawn', 'zoom');
   let _selection = d3_select(null);
+  let supersurface = d3_select(null);
   let _map;
 
   function map(selection) {
@@ -52,6 +53,8 @@ export function rendererMap(context) {
     L.svg({ clickable: true })
       .addTo(_map);
 
+    map.supersurface = supersurface = d3_select(_map.getContainer());
+
     _map.on('move', function() {
       dispatch.call('move', this, map);
     });
@@ -61,7 +64,7 @@ export function rendererMap(context) {
     });
   }
 
-  map.mainMap = function() {
+  map.container = function() {
     return d3_select('.main-map');
   };
 
@@ -81,7 +84,7 @@ export function rendererMap(context) {
   map.point = (point) => {
     const latLng = L.latLng(point[1], point[0]), { x, y } = map.getMap()
       .latLngToLayerPoint(latLng);
-    return [x, y];
+    return [y, x];
   };
 
   map.invert = (point) => {
@@ -120,7 +123,6 @@ export function rendererMap(context) {
   };
 
   map.init = function() {
-    console.log('map_init');
   };
 
   return utilRebind(map, dispatch, 'on');

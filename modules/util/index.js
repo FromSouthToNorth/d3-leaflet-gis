@@ -8,3 +8,5 @@ export {
 } from './util.js';
 
 export { utilObjectOmit } from './object.js';
+
+export { utiArrayUniq } from './array.js';

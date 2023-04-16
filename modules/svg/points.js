@@ -1,4 +1,4 @@
-import Wcities from '../../data/Wcities.json';
+import { svgTagClasses } from './tag_classes.js';
 
 export function svgPoints(projection, context) {
 
@@ -58,14 +58,15 @@ export function svgPoints(projection, context) {
             const latLng = L.latLng(geometry.coordinates[1], geometry.coordinates[0]);
             const { x, y } = map.latLngToLayerPoint(latLng);
             return `translate(${x}, ${y})`;
-          });
+          }).call(svgTagClasses());
+
+      groups.select('.shadow');
+      groups.select('.stroke');
     };
 
     onZoom();
     context.map()
       .on('zoom.points', onZoom);
-    groups.select('.shadow');
-    groups.select('.stroke');
   }
 
   return drawPoints;
