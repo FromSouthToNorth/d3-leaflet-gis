@@ -15,7 +15,6 @@ export function behaviorSelect(context) {
   var _pointerPrefix = 'PointerEvent' in window ? 'pointer' : 'mouse';
 
   function pointerdown(d3_event) {
-    console.log(d3_event);
     const id = (d3_event.pointerId || 'mouse').toString();
     cancelLongPress();
     if (d3_event.buttons && d3_event.buttons !== 1) return;

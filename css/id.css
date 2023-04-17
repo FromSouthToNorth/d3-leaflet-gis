@@ -29,7 +29,9 @@
   border-collapse: collapse;
   border-spacing: 0;
 }
-.hy a { text-decoration: none;}
+.hy a {
+  text-decoration: none;
+}
 /*
  * 1. Corrects font family not being inherited in all browsers.
  * 2. Corrects font size not being inherited in all browsers.
@@ -147,35 +149,60 @@
   clear: both;
 }
 /* base styles */
-.hy  path {
+.hy .leaflet-overlay-pane path {
   fill: none;
 }
 
 /* IE/Edge needs these overrides for markers to show up */
-.hy  path.oneway-marker-path          { fill: #000; }
-.hy  path.sided-marker-natural-path   { fill: rgb(170, 170, 170); }
-.hy  path.sided-marker-coastline-path { fill: #77dede; }
-.hy  path.sided-marker-barrier-path   { fill: #ddd; }
-.hy  path.sided-marker-man_made-path  { fill: #fff; }
+.hy path.oneway-marker-path {
+  fill: #000;
+}
+.hy path.sided-marker-natural-path {
+  fill: rgb(170, 170, 170);
+}
+.hy path.sided-marker-coastline-path {
+  fill: #77dede;
+}
+.hy path.sided-marker-barrier-path {
+  fill: #ddd;
+}
+.hy path.sided-marker-man_made-path {
+  fill: #fff;
+}
 
 /* IE/Edge rule for <use> marker style */
-.hy  path.viewfield-marker-path {
+.hy path.viewfield-marker-path {
   fill: #333;
   fill-opacity: 0.75;
   stroke: #fff;
   stroke-width: 0.5px;
   stroke-opacity: 0.75;
 }
-.hy .fill-wireframe  path.viewfield-marker-path {   /* IE/Edge rule for <use> marker style */
+.hy .fill-wireframe path.viewfield-marker-path { /* IE/Edge rule for <use> marker style */
   fill: none;
 }
 
 /* the above fill: none rule affects paths in <use> shadow dom only in Firefox */
-.hy  use.icon path { fill: #333; }                       /* FF svg Maki icons */
-.hy  .turn use path { fill: #000; }                      /* FF turn restriction icons */
-.hy #turn-only-shape2, .hy #turn-only-u-shape2 { fill: #7092ff; }      /* FF turn-only, turn-only-u */
-.hy #turn-no-shape2, .hy #turn-no-u-shape2     { fill: #e06d5f; }      /* FF turn-no, turn-no-u */
-.hy #turn-yes-shape2, .hy #turn-yes-u-shape2   { fill: #8cd05f; }      /* FF turn-yes, turn-yes-u */
+.hy use.icon path {
+  fill: #333;
+}
+/* FF svg Maki icons */
+.hy .turn use path {
+  fill: #000;
+}
+/* FF turn restriction icons */
+.hy #turn-only-shape2, .hy #turn-only-u-shape2 {
+  fill: #7092ff;
+}
+/* FF turn-only, turn-only-u */
+.hy #turn-no-shape2, .hy #turn-no-u-shape2 {
+  fill: #e06d5f;
+}
+/* FF turn-no, turn-no-u */
+.hy #turn-yes-shape2, .hy #turn-yes-u-shape2 {
+  fill: #8cd05f;
+}
+/* FF turn-yes, turn-yes-u */
 
 
 /* No interactivity except what we specifically allow */
@@ -235,7 +262,7 @@
 /* `.active` objects (currently being drawn or dragged) are not interactive */
 /* This is important to allow the events to drop through to whatever is */
 /* below them on the map, so you can still hover and connect to other things. */
-.hy  .active {
+.hy .active {
   pointer-events: none !important;
 }
 
@@ -931,8 +958,6 @@
   fill: rgba(170, 170, 170, 0.3);
 }
 .hy preset-icon-container
-
-
 .preset-icon .icon.tag-highway.other-line {
   color: #fff;
   fill: #777;
@@ -1226,10 +1251,10 @@
 .hy .low-zoom path.line.stroke.tag-highway-road {
   stroke-width: 3;
 }
-.hy .low-zoom  path.line.casing.tag-highway-service.tag-service-driveway {
+.hy .low-zoom path.line.casing.tag-highway-service.tag-service-driveway {
   stroke-width: 4.25;
 }
-.hy .low-zoom  path.line.stroke.tag-highway-service.tag-service-driveway {
+.hy .low-zoom path.line.stroke.tag-highway-service.tag-service-driveway {
   stroke-width: 2.25;
 }
 
@@ -1901,7 +1926,7 @@
   stroke: #58a9ed;
   stroke-width: 3;
   stroke-linecap: butt;
-  stroke-dasharray: 12,8;
+  stroke-dasharray: 12, 8;
 }
 .hy .low-zoom path.line.shadow.tag-route-ferry {
   stroke-width: 12;
@@ -1909,7 +1934,7 @@
 .hy .low-zoom path.line.stroke.tag-route-ferry,
 .hy .preset-icon-container path.line.stroke.tag-route-ferry {
   stroke-width: 2;
-  stroke-dasharray: 6,4;
+  stroke-dasharray: 6, 4;
 }
 .hy path.line.casing.tag-route-ferry {
   stroke: none;
@@ -2392,8 +2417,8 @@
 .hy.mode-add-preset .main-map,
 .hy.mode-draw-line .main-map,
 .hy.mode-draw-area .main-map,
-.hy.mode-add-line  .main-map,
-.hy.mode-add-area  .main-map,
+.hy.mode-add-line .main-map,
+.hy.mode-add-area .main-map,
 .hy.mode-drag-node .main-map,
 .hy.mode-drag-note .main-map {
   cursor: crosshair; /* Opera */
@@ -2402,8 +2427,8 @@
 
 .hy.mode-draw-line .way.target,
 .hy.mode-draw-area .way.target,
-.hy.mode-add-line  .way.target,
-.hy.mode-add-area  .way.target,
+.hy.mode-add-line .way.target,
+.hy.mode-add-area .way.target,
 .hy.mode-drag-node .way.target {
   cursor: crosshair; /* Opera */
   cursor: url(img/cursor-draw-connect-line.png) 9 9, crosshair; /* FF */
@@ -2411,8 +2436,8 @@
 
 .hy.mode-draw-line .vertex.target,
 .hy.mode-draw-area .vertex.target,
-.hy.mode-add-line  .vertex.target,
-.hy.mode-add-area  .vertex.target,
+.hy.mode-add-line .vertex.target,
+.hy.mode-add-area .vertex.target,
 .hy.mode-drag-node .vertex.target {
   cursor: crosshair; /* Opera */
   cursor: url(img/cursor-draw-connect-vertex.png) 9 9, crosshair; /* FF */
@@ -2615,9 +2640,9 @@
 }
 
 .hy .viewfield-group.currentView .viewfield-scale {
-  -webkit-transform: scale(2,2);
-  -ms-transform: scale(2,2);
-  transform: scale(2,2);
+  -webkit-transform: scale(2, 2);
+  -ms-transform: scale(2, 2);
+  transform: scale(2, 2);
 }
 
 .hy .sequence {
@@ -2641,7 +2666,7 @@
 }
 .hy .layer-streetside-images .sequence {
   stroke: #0fffc4;
-  stroke-opacity: 0.85;  /* bump opacity - only one per road */
+  stroke-opacity: 0.85; /* bump opacity - only one per road */
 }
 
 
@@ -2767,7 +2792,7 @@
 /* Mapillary viewer */
 .hy #hy-mly .domRenderer .TagSymbol {
   font-size: 10px;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   padding: 0 4px;
   border-radius: 4px;
   top: -25px;
@@ -2820,9 +2845,9 @@
 .hy .kartaview-image-wrap {
   width: 100%;
   height: 100%;
-  -webkit-transform-origin:0 0;
-  -ms-transform-origin:0 0;
-  transform-origin:0 0;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
 }
 
 
@@ -2846,7 +2871,7 @@
 .hy .photo-controls button:focus {
   height: 18px;
   width: 18px;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0, 0, 0, 0.65);
   color: #eee;
   border-radius: 0;
 }
@@ -2857,12 +2882,12 @@
   border-radius: 0 3px 3px 0;
 }
 .hy .photo-controls button:active {
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.85);
   color: #fff;
 }
 @media (hover: hover) {
   .hy .photo-controls button:hover {
-    background: rgba(0,0,0,0.85);
+    background: rgba(0, 0, 0, 0.85);
     color: #fff;
   }
 }
@@ -2874,7 +2899,7 @@
 .hy .layer-improveOSM .qaItem .qaItem-fill,
 .hy .layer-osmose .qaItem .qaItem-fill {
   stroke: #333;
-  stroke-width: 1.3px;  /* NOTE: likely a better way to scale the icon stroke */
+  stroke-width: 1.3px; /* NOTE: likely a better way to scale the icon stroke */
 }
 
 .hy .note-header-icon .note-fill,
@@ -2936,11 +2961,11 @@
 .hy .keepRight.itemType-270,
 .hy .keepRight.itemType-310,
 .hy .keepRight.itemType-320,
-.hy .keepRight.itemType-350 {   /* improper bridge tag */
+.hy .keepRight.itemType-350 { /* improper bridge tag */
   color: #ff9;
 }
 
-.hy .keepRight.itemType-50 {    /* almost junctions */
+.hy .keepRight.itemType-50 { /* almost junctions */
   color: #88f;
 }
 
@@ -2951,77 +2976,77 @@
 .hy .keepRight.itemType-110,
 .hy .keepRight.itemType-150,
 .hy .keepRight.itemType-220,
-.hy .keepRight.itemType-380 {   /* non-physical sport tag */
+.hy .keepRight.itemType-380 { /* non-physical sport tag */
   color: #5d0;
 }
 
-.hy .keepRight.itemType-130 {   /* disconnected ways */
+.hy .keepRight.itemType-130 { /* disconnected ways */
   color: #fa3;
 }
 
-.hy .keepRight.itemType-170 {   /* FIXME tag */
+.hy .keepRight.itemType-170 { /* FIXME tag */
   color: #ff0;
 }
 
-.hy .keepRight.itemType-190 {   /* intersection without junction */
+.hy .keepRight.itemType-190 { /* intersection without junction */
   color: #f33;
 }
 
-.hy .keepRight.itemType-200 {   /* overlapping ways */
+.hy .keepRight.itemType-200 { /* overlapping ways */
   color: #fdbf6f;
 }
 
 .hy .keepRight.itemType-160,
-.hy .keepRight.itemType-230 {   /* layer conflict */
+.hy .keepRight.itemType-230 { /* layer conflict */
   color: #b60;
 }
 
-.hy .keepRight.itemType-280 {   /* boundary issues */
+.hy .keepRight.itemType-280 { /* boundary issues */
   color: #5f47a0;
 }
 
 .hy .keepRight.itemType-180,
-.hy .keepRight.itemType-290 {   /* turn restriction issues */
+.hy .keepRight.itemType-290 { /* turn restriction issues */
   color: #ace;
 }
 
 .hy .keepRight.itemType-300,
-.hy .keepRight.itemType-390 {   /* missing tracktype */
+.hy .keepRight.itemType-390 { /* missing tracktype */
   color: #090;
 }
 
 .hy .keepRight.itemType-360,
 .hy .keepRight.itemType-370,
-.hy .keepRight.itemType-410 {   /* website issues */
+.hy .keepRight.itemType-410 { /* website issues */
   color: #f9b;
 }
 
 .hy .keepRight.itemType-120,
-.hy .keepRight.itemType-400 {   /* geometry / turn angles */
+.hy .keepRight.itemType-400 { /* geometry / turn angles */
   color: #c35;
 }
 
 /* ImproveOSM Issues
 ------------------------------------------------------- */
 
-.hy .improveOSM.itemType-ow {   /* missing one way */
+.hy .improveOSM.itemType-ow { /* missing one way */
   color: #1E90FF;
 }
 
-.hy .improveOSM.itemType-mr-road {   /* missing road */
+.hy .improveOSM.itemType-mr-road { /* missing road */
   color: #B452CD;
 }
-.hy .improveOSM.itemType-mr-path {   /* missing path */
+.hy .improveOSM.itemType-mr-path { /* missing path */
   color: #A0522D;
 }
-.hy .improveOSM.itemType-mr-parking {   /* missing parking */
+.hy .improveOSM.itemType-mr-parking { /* missing parking */
   color: #EEEE00;
 }
-.hy .improveOSM.itemType-mr-both {   /* missing road+parking */
+.hy .improveOSM.itemType-mr-both { /* missing road+parking */
   color: #FFA500;
 }
 
-.hy .improveOSM.itemType-tr {   /* missing turn restriction */
+.hy .improveOSM.itemType-tr { /* missing turn restriction */
   color: #EC1C24;
 }
 
@@ -3272,7 +3297,7 @@
 }
 
 .hy a, .hy button, .hy input, .hy textarea {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-touch-callout: none;
 }
 
@@ -3299,7 +3324,9 @@
 }
 
 .hy h3:last-child,
-.hy h4:last-child { margin-bottom: 0;}
+.hy h4:last-child {
+  margin-bottom: 0;
+}
 
 .hy h3 {
   font-size: 16px;
@@ -3431,12 +3458,12 @@
   /* need this since line-height interpretation may vary by font or browser */
   height: 2.585em;
 }
-.hy textarea  {
+.hy textarea {
   min-height: 2em;
   padding-top: 5px;
   padding-bottom: 5px;
   resize: vertical;
-  font:normal 12px/20px "-apple-system", BlinkMacSystemFont,
+  font: normal 12px/20px "-apple-system", BlinkMacSystemFont,
   "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
   "Fira Sans", "Droid Sans", "Helvetica Neue", "Arial",
   sans-serif;
@@ -3521,8 +3548,15 @@
 
 /* Grid
 ------------------------------------------------------- */
-.hy .col6  { float: left; width: 50.0000%; max-width: 600px; }
-.hy .col12 { float: left; width: 100.0000%; }
+.hy .col6 {
+  float: left;
+  width: 50.0000%;
+  max-width: 600px;
+}
+.hy .col12 {
+  float: left;
+  width: 100.0000%;
+}
 
 
 /* Utility Classes
@@ -3540,18 +3574,26 @@
   color: #333;
 }
 .hy .fillD {
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, .5);
   color: #fff;
 }
 .hy .fillD2 {
-  background: rgba(0,0,0,.75);
+  background: rgba(0, 0, 0, .75);
   color: #fff;
 }
 
-.hy .fl { float: left;}
-.hy .fr { float: right;}
-.hy .al { left: 0; }
-.hy .ar { right: 0; }
+.hy .fl {
+  float: left;
+}
+.hy .fr {
+  float: right;
+}
+.hy .al {
+  left: 0;
+}
+.hy .ar {
+  right: 0;
+}
 
 .hy input.hide,
 .hy textarea.hide,
@@ -3603,17 +3645,17 @@
   background: #7092ff;
 }
 .hy button.disabled {
-  background-color: rgba(255,255,255,.25);
-  color: rgba(0,0,0,.4);
+  background-color: rgba(255, 255, 255, .25);
+  color: rgba(0, 0, 0, .4);
   cursor: not-allowed;
 }
 
 .hy .joined > * {
   border-radius: 0;
-  border-right: 1px solid rgba(0,0,0,.5);
+  border-right: 1px solid rgba(0, 0, 0, .5);
 }
 .hy[dir='rtl'] .joined > * {
-  border-left: 1px solid rgba(0,0,0,.5);
+  border-left: 1px solid rgba(0, 0, 0, .5);
   border-right: none;
 }
 
@@ -3696,8 +3738,8 @@
 }
 .hy button.disabled .icon.operation use,
 .hy .icon.operation.disabled use {
-  fill: rgba(32,32,32,.2);
-  color: rgba(40,40,40,.2);
+  fill: rgba(32, 32, 32, .2);
+  color: rgba(40, 40, 40, .2);
 }
 
 .hy .icon.monochrome use {
@@ -3909,7 +3951,7 @@
 .hy button.add-note svg.icon {
   height: 15px;
   width: 15px;
-  color: rgba(0,0,0,0.25);
+  color: rgba(0, 0, 0, 0.25);
   stroke: #333;
   stroke-width: 60px;
   margin-top: 3px;
@@ -4275,7 +4317,7 @@
 
 /* Feature List / Search Results
 ------------------------------------------------------- */
-.hy .feature-list  {
+.hy .feature-list {
   width: 100%;
 }
 .hy .no-results-item,
@@ -4376,7 +4418,7 @@
 
 /* Preset List and Icons
 ------------------------------------------------------- */
-.hy .preset-list  {
+.hy .preset-list {
   width: 100%;
   padding: 20px 20px 10px 20px;
 }
@@ -4521,7 +4563,7 @@
 
 .hy .preset-icon {
   width: 100%;
-  height:100%;
+  height: 100%;
   position: absolute;
   z-index: 1;
 }
@@ -4690,7 +4732,8 @@
   content: "";
   position: absolute;
   top: -5px;
-  left: -1px; right: -1px;
+  left: -1px;
+  right: -1px;
   border: 1px solid #ccc;
   border-bottom: none;
   border-radius: 6px 6px 0 0;
@@ -5272,9 +5315,13 @@
 .hy .form-field-input-number button.decrement::after,
 .hy .form-field-input-number button.increment::after {
   content: "";
-  height: 0; width: 0;
+  height: 0;
+  width: 0;
   position: absolute;
-  left: 0; right: 0; bottom: 0; top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
   margin: auto;
 }
 .hy .form-field-input-number button.decrement::after {
@@ -5793,8 +5840,8 @@
 .hy div.combobox {
   z-index: 9999;
   display: none;
-  -webkit-box-shadow: 0 4px 10px 1px rgba(0,0,0,.2);
-  box-shadow: 0 4px 10px 1px rgba(0,0,0,.2);
+  -webkit-box-shadow: 0 4px 10px 1px rgba(0, 0, 0, .2);
+  box-shadow: 0 4px 10px 1px rgba(0, 0, 0, .2);
   margin-top: -1px;
   background: #fff;
   max-height: 245px;
@@ -5848,9 +5895,13 @@
 
 .hy .combobox-caret::after {
   content: "";
-  height: 0; width: 0;
+  height: 0;
+  width: 0;
   position: absolute;
-  left: 0; right: 0; bottom: 0; top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
   margin: auto;
   border-top: 5px solid #ccc;
   border-left: 5px solid transparent;
@@ -5913,9 +5964,9 @@
   border-top: 0;
   border-radius: 0 0 4px 4px;
   z-index: 20;
-  background: rgba(255,255,255,0.95);
-  -webkit-box-shadow: 0 0 30px 5px rgba(0,0,0,.4);
-  box-shadow: 0 0 30px 5px rgba(0,0,0,.4);
+  background: rgba(255, 255, 255, 0.95);
+  -webkit-box-shadow: 0 0 30px 5px rgba(0, 0, 0, .4);
+  box-shadow: 0 0 30px 5px rgba(0, 0, 0, .4);
 }
 
 .hy .field-help-title h2 {
@@ -6324,7 +6375,7 @@
 
 .hy[dir='rtl'] .section-raw-member-editor .member-row .member-entity-name,
 .hy[dir='rtl'] .section-raw-membership-editor .member-row .member-entity-name {
-  padding-left:0;
+  padding-left: 0;
   padding-right: 10px;
 }
 
@@ -6373,15 +6424,15 @@
 }
 .hy .add-row button {
   padding: 5px;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, .5);
 }
 .hy .add-row button:focus,
 .hy .add-row button:active {
-  background: rgba(0,0,0,.8);
+  background: rgba(0, 0, 0, .8);
 }
 @media (hover: hover) {
   .hy .add-row button:hover {
-    background: rgba(0,0,0,.8);
+    background: rgba(0, 0, 0, .8);
   }
 }
 
@@ -6568,7 +6619,7 @@
   text-transform: capitalize;
 }
 .hy[dir='rtl'] .qa-details-description-text::first-letter {
-  text-transform: none;  /* #5877 */
+  text-transform: none; /* #5877 */
 }
 .hy .qa-details-subsection h4 {
   padding-bottom: 2px;
@@ -6754,7 +6805,7 @@
   position: relative;
   width: 40px;
   height: 40px;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, .5);
   border-radius: 0;
   pointer-events: auto;
 }
@@ -7049,7 +7100,7 @@
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
   border-left: 1px solid #ccc;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
 }
 .hy[dir='rtl'] .issue-label .issue-info-button {
   border-left: 0;
@@ -7243,7 +7294,7 @@
 }
 
 .hy .layer-list.issues-list li.issue {
-  border-color: inherit;    /* override .layer-list styles */
+  border-color: inherit; /* override .layer-list styles */
   color: inherit;
   height: unset;
 }
@@ -7288,7 +7339,7 @@
   width: 3em;
   height: 2em;
   text-align: center;
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
   color: currentColor;
 }
 
@@ -7519,7 +7570,10 @@
   display: block;
   position: absolute;
   margin: auto;
-  left: 0; right: 0; top: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   height: 0;
   width: 0;
 }
@@ -8110,16 +8164,36 @@
   stroke-width: 1;
 }
 
-.hy .nocolor { color: rgba(0, 0, 0, 0); }
-.hy .red     { color: rgba(255, 0, 0, 0.75); }
-.hy .green   { color: rgba(0, 255, 0, 0.75); }
-.hy .blue    { color: rgba(176, 176, 255, 0.75); }
-.hy .yellow  { color: rgba(255, 255, 0, 0.75); }
-.hy .cyan    { color: rgba(0, 255, 255, 0.75); }
-.hy .magenta { color: rgba(255, 0, 255, 0.75); }
-.hy .orange  { color: rgba(255, 153, 0, 0.75); }
-.hy .pink    { color: rgba(255, 0, 153, 0.75); }
-.hy .purple  { color: rgba(153, 0, 255, 0.75); }
+.hy .nocolor {
+  color: rgba(0, 0, 0, 0);
+}
+.hy .red {
+  color: rgba(255, 0, 0, 0.75);
+}
+.hy .green {
+  color: rgba(0, 255, 0, 0.75);
+}
+.hy .blue {
+  color: rgba(176, 176, 255, 0.75);
+}
+.hy .yellow {
+  color: rgba(255, 255, 0, 0.75);
+}
+.hy .cyan {
+  color: rgba(0, 255, 255, 0.75);
+}
+.hy .magenta {
+  color: rgba(255, 0, 255, 0.75);
+}
+.hy .orange {
+  color: rgba(255, 153, 0, 0.75);
+}
+.hy .pink {
+  color: rgba(255, 0, 153, 0.75);
+}
+.hy .purple {
+  color: rgba(153, 0, 255, 0.75);
+}
 
 .hy .debug-legend {
   position: absolute;
@@ -8425,7 +8499,7 @@
 }
 .hy .flash-icon.disabled circle {
   cursor: auto;
-  fill: rgba(255,255,255,0.7);
+  fill: rgba(255, 255, 255, 0.7);
 }
 
 .hy .flash-icon use {
@@ -8433,8 +8507,8 @@
 }
 .hy .flash-icon.disabled use,
 .hy .flash-icon.operation.disabled use {
-  fill: rgba(32,32,32,0.7);
-  color: rgba(40,40,40,0.7);
+  fill: rgba(32, 32, 32, 0.7);
+  color: rgba(40, 40, 40, 0.7);
 }
 
 .hy .flash-text {
@@ -8521,10 +8595,10 @@
   padding: 5px;
 }
 .hy[dir='ltr'] .map-footer-list li:not(:last-child) {
-  border-right: 1px solid rgba(255,255,255,.5);
+  border-right: 1px solid rgba(255, 255, 255, .5);
 }
 .hy[dir='rtl'] .map-footer-list li:not(:last-child) {
-  border-left: 1px solid rgba(255,255,255,.5);
+  border-left: 1px solid rgba(255, 255, 255, .5);
 }
 .hy .map-footer-list li:empty {
   display: none;
@@ -8708,10 +8782,13 @@
   overflow: auto;
 }
 .hy .shaded:before {
-  content:'';
-  background: rgba(0,0,0,0.5);
+  content: '';
+  background: rgba(0, 0, 0, 0.5);
   position: absolute;
-  left: 0px; right: 0px; top: 0px; bottom: 0px;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
 }
 
 .hy .modal-section {
@@ -9175,11 +9252,11 @@
 
 .hy .notice .zoom-to:focus,
 .hy .notice .zoom-to:active {
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
 }
 @media (hover: hover) {
   .hy .notice .zoom-to:hover {
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -9487,18 +9564,18 @@
 }
 
 .hy ::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, .2);
   background-clip: padding-box;
   border: solid transparent;
   border-width: 3px 3px 3px 4px;
   border-radius: 6px;
 }
 .hy ::-webkit-scrollbar-track:active {
-  background-color: rgba(0,0,0,.05);
+  background-color: rgba(0, 0, 0, .05);
 }
 @media (hover: hover) {
   .hy ::-webkit-scrollbar-track:hover {
-    background-color: rgba(0,0,0,.05);
+    background-color: rgba(0, 0, 0, .05);
   }
 }
 
@@ -9577,12 +9654,20 @@
   animation-direction: alternate;
 }
 @-webkit-keyframes pulse {
-  from  { background: #7092ff; }
-  to    { background: #c6d4ff; }
+  from {
+    background: #7092ff;
+  }
+  to {
+    background: #c6d4ff;
+  }
 }
 @keyframes pulse {
-  from  { background: #7092ff; }
-  to    { background: #c6d4ff; }
+  from {
+    background: #7092ff;
+  }
+  to {
+    background: #c6d4ff;
+  }
 }
 
 .hy .intro-nav-wrap button.chapter.finished {

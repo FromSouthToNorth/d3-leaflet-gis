@@ -5,13 +5,20 @@ export function operationDelete(context, selectedIDs) {
 
   }
 
+  operation.tooltip = function() {
+    const disable = operation.disabled();
+    const text = disable ? '彻底删除该要素' : '该要素可见部分不足，无法将其删除'
+    return function(selection) {
+      return selection.append('span').attr('class', 'localized-text').text(text);
+    }
+  }
+
   operation.disabled = function() {
     return false;
   }
 
-
   operation.id = 'delete';
-  operation.key = [];
+  operation.keys = [];
   operation.title = 'operations.delete.title';
 
   return operation;

@@ -2,9 +2,9 @@ import { select as d3_select } from 'd3-selection';
 import { dispatch as d3_dispatch } from 'd3-dispatch';
 
 import { geoVecAdd } from '../geo/index.js';
-import { uiTooltip } from './tooltip.js';
 import { utilRebind } from '../util/index.js';
 import { svgIcon } from '../svg/index.js';
+import { uiTooltip } from './tooltip.js';
 
 export function uiEditMenu(context) {
 
@@ -15,11 +15,9 @@ export function uiEditMenu(context) {
   let _anchorLoc = [0, 0];
   let _anchorLocLonLat = [0, 0];
 
-  const _vpTopMargin = 85; // viewport top margin
-  const _vpBottomMargin = 45; // viewport bottom margin
+  const _vpBottomMargin = 12; // viewport bottom margin
   const _vpSideMargin = 35;   // viewport side margin
 
-  let _menuTop = false;
   let _menuHeight;
   let _menuWidth;
 
@@ -32,7 +30,7 @@ export function uiEditMenu(context) {
   // 稍微偏离目标位置的菜单
   const _menuSideMargin = 10;
 
-  let _tooltips = [];
+  let _tooltips = []
 
   const editMenu = function(selection) {
     const ops = _operations.filter(function(op) {
@@ -41,7 +39,8 @@ export function uiEditMenu(context) {
 
     if (!ops.length) return;
 
-    _tooltips = [];
+    _tooltips = []
+
     const buttonHeight = 34;
     _menuWidth = 44;
 
@@ -85,7 +84,15 @@ export function uiEditMenu(context) {
       });
 
     buttonsEnter.each(function(d) {
+      const tooltip = uiTooltip()
+        .heading(() => d.title)
+        .title(d.tooltip)
+        .keys([d.keys[0]]);
+
+      _tooltips.push(tooltip);
+
       d3_select(this)
+        .call(tooltip)
         .append('div')
         .attr('class', 'icon-wrap')
         .call(svgIcon(d.icon && d.icon() || '#iD-operation-' + d.id, 'operation'));
@@ -94,6 +101,7 @@ export function uiEditMenu(context) {
     updatePosition();
 
     function click(d3_event, operation) {
+      d3_event.stopPropagation();
       console.log('click: ', d3_event, operation);
     }
 
@@ -129,7 +137,13 @@ export function uiEditMenu(context) {
     const origin = geoVecAdd(anchorLoc, offset);
 
     _menu.style('left', origin[0] + 'px')
-      .style('top', origin[1] + 'px').style('z-index', 890)
+      .style('top', origin[1] + 'px')
+      .style('z-index', 890);
+
+    const tooltipSide = tooltipPosition(viewport, menuLeft);
+    _tooltips.forEach(function(tooltip) {
+      tooltip.placement(tooltipSide);
+    })
 
     function displayOnLeft(viewport) {
       if ((anchorLoc[0] + _menuSideMargin + _menuWidth) > (viewport.width - _vpSideMargin)) {
@@ -138,6 +152,21 @@ export function uiEditMenu(context) {
       }
       // prefer right menu
       return false;
+    }
+
+    function tooltipPosition(viewport, menuLeft) {
+      if (menuLeft) {
+        // if there's not room for a right-side menu then there definitely
+        // isn't room for right-side tooltips
+        return 'left';
+      }
+      if ((anchorLoc[0] + _menuSideMargin + _menuWidth + _tooltipWidth) > (viewport.width - _vpSideMargin)) {
+        // right tooltips would be too close to the right viewport edge, go left
+        return 'left';
+      }
+      // prefer right tooltips
+      return 'right';
+
     }
 
   }
@@ -149,6 +178,7 @@ export function uiEditMenu(context) {
 
     _menu.remove();
     _tooltips = [];
+
     dispatch.call('toggled', this, false);
   };
 
