@@ -1,4 +1,5 @@
 import 'leaflet';
+import _throttle from 'lodash-es/throttle.js';
 
 import { select as d3_select } from 'd3-selection';
 import { dispatch as d3_dispatch } from 'd3-dispatch';
@@ -55,12 +56,28 @@ export function rendererMap(context) {
     map.supersurface = supersurface = d3_select(_map.getContainer());
 
     _map.on('move', function() {
+      scheduleRedraw();
       dispatch.call('move', this, map);
+      dispatch.call('drawn', this, { full: true });
     });
 
     _map.on('zoom', function() {
       dispatch.call('zoom', this, map);
     });
+
+  }
+
+  const scheduleRedraw = _throttle(redraw, 750);
+
+  function redraw() {
+    if (supersurface.empty()) return;
+    const zoom = map.zoom();
+    const z = String(~~zoom);
+    if (supersurface.attr('data-zoom') !== z) {
+      supersurface.attr('data-zoom', z);
+    }
+
+    return map;
   }
 
   map.container = function() {

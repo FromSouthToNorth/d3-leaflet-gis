@@ -30,7 +30,7 @@ export function uiEditMenu(context) {
   // 稍微偏离目标位置的菜单
   const _menuSideMargin = 10;
 
-  let _tooltips = []
+  let _tooltips = [];
 
   const editMenu = function(selection) {
     const ops = _operations.filter(function(op) {
@@ -39,7 +39,7 @@ export function uiEditMenu(context) {
 
     if (!ops.length) return;
 
-    _tooltips = []
+    _tooltips = [];
 
     const buttonHeight = 34;
     _menuWidth = 44;
@@ -100,6 +100,11 @@ export function uiEditMenu(context) {
 
     updatePosition();
 
+    context.map()
+      .on('drawn.edit-menu', function(info) {
+        if (info.full) updatePosition();
+      });
+
     function click(d3_event, operation) {
       d3_event.stopPropagation();
       console.log('click: ', d3_event, operation);
@@ -143,7 +148,7 @@ export function uiEditMenu(context) {
     const tooltipSide = tooltipPosition(viewport, menuLeft);
     _tooltips.forEach(function(tooltip) {
       tooltip.placement(tooltipSide);
-    })
+    });
 
     function displayOnLeft(viewport) {
       if ((anchorLoc[0] + _menuSideMargin + _menuWidth) > (viewport.width - _vpSideMargin)) {
